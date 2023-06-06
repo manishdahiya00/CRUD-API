@@ -1,19 +1,29 @@
 const USER = require("../models/model")
-
+const bcrypt = require("bcryptjs")
 //    Post  --------------->
-const post = async (req,res) =>{
+const post = async (req, res) => {
     try {
-        if (!req.body || !Object.keys(req.body).length) {
-      res.status(400).json({ error: 'No data was sent in the request.' });
-    } else {
-      await USER.create(req.body);
-      res.status(200).json({ success: true });
-    }
-      } catch (error) {
-        console.log(error);
+      if (!req.body || !Object.keys(req.body).length) {
+        res.status(400).json({ error: 'No data was sent in the request.' });
+      } else {
+        const { name, email, password } = req.body;
+        if (!password || !email || !name) {
+          res.status(400).json({ error: 'Please enter all details' });
+        } else {
+          try {
+            hashedPass = await bcrypt.hash(password, 8);
+            await USER.create({ name, email, password: hashedPass });
+            res.status(200).json({ success: true });
+          } catch (bcryptError) {
+            res.status(500).json({ error: 'Error occurred while encrypting the password.' });
+          }
+        }
       }
-}
-
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  
 //   Get All  --------------->
 const getAll = async (req,res) =>{
    try {

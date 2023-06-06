@@ -1,10 +1,13 @@
 const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
     name:{
-        type:String
+        type : String
     },
     email:{
-        type:String
+        type : String
     },
+    password:{
+        type : String
+    }
 })
 module.exports = mongoose.model('USER', userSchema);
