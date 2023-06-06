@@ -84,7 +84,11 @@ const Delete = async (req,res) =>{
             console.log(error);
         }
     }
-
+  
+//   Home  --------------->
+const hello = (req,res) =>{
+res.status(200).json({success:true,message:"Welcome to the free api!!!!"});
+}
 
 //  Export Functions --------------->
 module.exports = {
@@ -93,4 +97,5 @@ module.exports = {
     get,
     Update,
     Delete,
+    hello
 }
